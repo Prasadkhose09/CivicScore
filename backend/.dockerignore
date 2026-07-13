@@ -1,0 +1,10 @@
+target/
+.idea/
+.git/
+*.iws
+*.iml
+*.ipr
+.vscode/
+*.log
+backend_log.log
+backend_log_utf8.log
