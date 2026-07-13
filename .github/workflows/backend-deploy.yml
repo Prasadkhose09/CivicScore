@@ -37,12 +37,21 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
+
+            echo "Going to project..."
             cd ~/apps/CivicScore
+
+            echo "Fetching latest code..."
             git fetch origin
+
+            echo "Resetting to latest main..."
             git reset --hard origin/main
 
             cd backend
             chmod +x deploy.sh
             chmod +x mvnw
 
+            echo "Deploying..."
             ./deploy.sh
+
+            echo "Deployment completed successfully!"

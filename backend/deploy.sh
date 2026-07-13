@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+
+echo "Fetching secrets from AWS SSM..."
 
 DB_URL=$(aws ssm get-parameter \
   --name "/civicscore/db/url" \
@@ -22,8 +25,13 @@ JWT_SECRET=$(aws ssm get-parameter \
   --query "Parameter.Value" \
   --output text)
 
-docker rm -f civicscore-backend 2>/dev/null
+echo "Building Docker image..."
+docker build -t civicscore-backend .
 
+echo "Stopping old container..."
+docker rm -f civicscore-backend 2>/dev/null || true
+
+echo "Starting new container..."
 docker run -d \
   --name civicscore-backend \
   --restart unless-stopped \
@@ -34,3 +42,5 @@ docker run -d \
   -e SPRING_JPA_HIBERNATE_DDL_AUTO=update \
   -e JWT_SECRET="$JWT_SECRET" \
   civicscore-backend
+
+echo "Backend container started successfully!"
