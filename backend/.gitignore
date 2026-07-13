@@ -31,3 +31,23 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Build output
+target/
+
+# Logs
+*.log
+backend_log.log
+backend_log_utf8.log
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
